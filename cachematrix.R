@@ -1,15 +1,29 @@
-## Put comments here that give an overall description of what your
-## functions do
-
-## Write a short comment describing this function
+# Create Cacheable Matrix Object
 
 makeCacheMatrix <- function(x = matrix()) {
-
+m <- NULL
+m$set(matrix( c(0, 2, 2, 0), 2, 2))
+  x <<- matrix
+  m <<- NULL
+}
+m$get <- function() x
+setmean <- function(mean) m <<- mean
+getmean <- function() m
+list(m$set = m$set, m$get = m$get,
+     setmean = setmean,
+     getmean = getmean)
 }
 
-
-## Write a short comment describing this function
+# Test the inverse cacher
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+        m <- x$getmean
+        if(!is.null(m)) {
+          message("getting cached data")
+          return (m)
+        }
+        data <- x$get()
+        m <- mean(data, ...)
+        x$setmean(m)
+        m
 }
